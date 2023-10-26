@@ -58,12 +58,14 @@ module.exports = {
       });
 
       if (user !== null) {
-        var token = jwt.sign({ idUser: user.dataValues.id,  role: user.role.dataValues.name}, secretJWT);
+        
 
         if (data.body.email == user.dataValues.email) {
           if (
             await bcryptjs.compare(data.body.password, user.dataValues.password)
           ) {
+            var token = jwt.sign({ idUser: user.dataValues.id,  role: user.role.dataValues.name}, secretJWT);
+            
             res.status(200).send({
               status: "success",
               message: "Login was successful for the user.",

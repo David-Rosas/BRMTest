@@ -17,8 +17,7 @@ module.exports = {
 
       for (const product of products) {
         const { product_id, quantity } = product;
-        await OrderList.create({ order_id: newOrder.id, product_id, quantity });
-
+        
         const productP = await Product.findByPk(product_id);
         //verificar si el producto existe
         if (!productP) {
@@ -30,6 +29,8 @@ module.exports = {
             error: "Cantidad disponible insuficiente para el producto.",
           });
         }
+        await OrderList.create({ order_id: newOrder.id, product_id, quantity });
+
         const productPrice = productP.price;
 
         newOrder.price_total += productPrice * quantity;
